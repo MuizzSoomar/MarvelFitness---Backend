@@ -1,13 +1,15 @@
+spring:
+  profiles:
+    active: marvelfitness
+
+server:
+  port: 5000
+  
 application:
   datasource:
     jdbc-url: marvelfitnessdb.czjsxitqqdv8.us-east-2.rds.amazonaws.com:5432/marvelfitness
     username: marvelfitness
     password: marvelfitness
     pool-size: 30
+    
   
-spring:
-  profiles:
-    active: marvelfitness
-  autoconfigure:
-    exclude:
-    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
