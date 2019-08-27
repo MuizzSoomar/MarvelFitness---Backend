@@ -1,0 +1,6 @@
+app:
+  datasource:
+    jdbc-url: marvelfitnessdb.czjsxitqqdv8.us-east-2.rds.amazonaws.com:5432/marvelfitness
+    username: marvelfitness
+    password: marvelfitness
+    pool-size: 30
