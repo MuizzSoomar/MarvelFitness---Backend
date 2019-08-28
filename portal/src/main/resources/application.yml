@@ -10,4 +10,4 @@ spring:
     active: marvelfitness
   autoconfigure:
     exclude:
-    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+#    - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

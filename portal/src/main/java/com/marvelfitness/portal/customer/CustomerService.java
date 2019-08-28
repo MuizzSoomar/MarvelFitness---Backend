@@ -1,13 +1,18 @@
 package com.marvelfitness.portal.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class CustomerService {
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     private List<Customer> customers = new ArrayList<>(Arrays.asList(
             new Customer(1001, "Tony Stark", "ironman@gmail.com", "password1"),
@@ -16,29 +21,26 @@ public class CustomerService {
         ));
 
     public List<Customer> getAllCustomers() {
+//        return customers;
+        List<Customer> customers = new ArrayList<>();
+        customerRepository.findAll().forEach(customers::add);
         return customers;
     }
 
     public Customer getCustomer(int customer_id) {
-        return customers.stream().filter(c -> c.getCustomer_id() == customer_id).findFirst().get();
+        return customerRepository.findById(customer_id).orElse(null);
 
     }
 
     public void addCustomer(Customer customer) {
-        customers.add(customer);
+        customerRepository.save(customer);
     }
 
     public void updateCustomer(Customer customer, int customer_id) {
-        for (int i = 0; i < customers.size(); i++) {
-            Customer c = customers.get(i);
-            if (c.getCustomer_id() == customer_id) {
-                customers.set(i, customer);
-                return;
-            }
-        }
+        customerRepository.save(customer);
     }
 
     public void deleteCustomer(int customer_id) {
-        customers.removeIf(c -> c.getCustomer_id() == customer_id);
+        customerRepository.deleteById(customer_id);
     }
 }

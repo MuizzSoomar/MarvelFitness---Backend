@@ -1,8 +1,15 @@
 package com.marvelfitness.portal.customer;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int customer_id;
     private String name;
     private String email;
@@ -14,6 +21,10 @@ public class Customer {
     private String state;
     private String zip;
     private String password;
+
+    public Customer() {
+
+    }
 
     public Customer(int customer_id, String name, String email, String password) {
         this.customer_id = customer_id;
