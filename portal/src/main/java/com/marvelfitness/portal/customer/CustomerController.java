@@ -3,7 +3,6 @@ package com.marvelfitness.portal.customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -28,6 +27,18 @@ public class CustomerController {
     @RequestMapping("/customers/{customer_id}")
     public Customer getCustomerById(@PathVariable int customer_id) {
         return customerService.getCustomerById(customer_id);
+    }
+
+    /**
+     * Endpoint for Customer search functionality
+     * @param name Customer name
+     * @param email Customer email
+     * @return Customer data with given name, email, or list of all Customers if no matches found
+     */
+    @RequestMapping(value = "/customers/search")
+    public List<Customer> searchForCustomer(@RequestParam(value="name", required=false, defaultValue = "") String name,
+                                      @RequestParam(value="email", required=false, defaultValue = "") String email) {
+        return customerService.searchForCustomer(name, email);
     }
 
     /**
