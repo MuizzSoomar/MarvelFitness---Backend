@@ -16,7 +16,7 @@ public class UserController {
      * Endpoint for getting a list of all Users
      * @return list of all Users in database
      */
-    @RequestMapping("/users")
+    @RequestMapping(method=RequestMethod.GET, value="/users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -25,7 +25,7 @@ public class UserController {
      * Endpoint for getting a list of all Customers
      * @return list of all Customers in database
      */
-    @RequestMapping("/customers")
+    @RequestMapping(method=RequestMethod.GET, value="/customers")
     public List<User> getAllCustomers() {
         return userService.getAllCustomers();
     }
@@ -34,7 +34,7 @@ public class UserController {
      * Endpoint for getting a list of all Employees
      * @return list of all Employees in database
      */
-    @RequestMapping("/employees")
+    @RequestMapping(method=RequestMethod.GET, value="/employees")
     public List<User> getAllEmployees() {
         return userService.getAllEmployees();
     }
@@ -43,7 +43,7 @@ public class UserController {
      * Endpoint for getting a Customer by user_id
      * @return Customer data with given user_id
      */
-    @RequestMapping("/customers/{user_id}")
+    @RequestMapping(method=RequestMethod.GET, value="/customers/{user_id}")
     public User getCustomerById(@PathVariable int user_id) {
         return userService.getCustomerById(user_id);
     }
@@ -52,7 +52,7 @@ public class UserController {
      * Endpoint for getting a Employee by user_id
      * @return Employee data with given user_id
      */
-    @RequestMapping("/employees/{user_id}")
+    @RequestMapping(method=RequestMethod.GET, value="/employees/{user_id}")
     public User getEmployeeById(@PathVariable int user_id) {
         return userService.getEmployeeById(user_id);
     }
@@ -63,7 +63,7 @@ public class UserController {
      * @param email Customer email
      * @return User data with given name, email, or list of all Users if no matches found
      */
-    @RequestMapping(value = "/customers/search")
+    @RequestMapping(method=RequestMethod.GET, value="/customers/search")
     public List<User> searchForCustomer(@RequestParam(value="name", required=false, defaultValue = "") String name,
                                         @RequestParam(value="email", required=false, defaultValue = "") String email) {
         return userService.searchForCustomer(name, email);
@@ -73,7 +73,7 @@ public class UserController {
      * Endpoint for adding a new User to the database
      * @param user new User info to add
      */
-    @RequestMapping(method= RequestMethod.POST, value="/users")
+    @RequestMapping(method=RequestMethod.POST, value="/users")
     public void addUser(@RequestBody User user) {
         userService.addUser(user);
     }

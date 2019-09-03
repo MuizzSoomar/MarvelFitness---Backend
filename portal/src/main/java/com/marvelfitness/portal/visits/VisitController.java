@@ -10,12 +10,12 @@ public class VisitController {
     @Autowired
     private VisitService visitService;
 
-    @RequestMapping("/visits")
+    @RequestMapping(method=RequestMethod.GET, value="/visits")
     public List<Visit> getAllVisits() {
         return visitService.getAllVisits();
     }
 
-    @RequestMapping("/visits/{visit_id}")
+    @RequestMapping(method=RequestMethod.GET, value="/visits/{visit_id}")
     public Visit getVisit(@PathVariable int visit_id) {
         return visitService.getVisit(visit_id);
     }
