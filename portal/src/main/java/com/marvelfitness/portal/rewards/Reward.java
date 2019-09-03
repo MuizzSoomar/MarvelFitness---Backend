@@ -1,15 +1,13 @@
 package com.marvelfitness.portal.rewards;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Reward {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "reward_id_sequence", sequenceName = "reward_id_sequence", initialValue = 1, allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="reward_id_sequence")
     private int reward_id;
     private int value;
     private String name;
