@@ -1,16 +1,14 @@
-package com.marvelfitness.portal.customer;
+package com.marvelfitness.portal.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Customer {
+@Table(name = "user_table", schema = "public")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int customer_id;
+    private int user_id;
     private String name;
     private String email;
     private String phone_number;
@@ -21,12 +19,13 @@ public class Customer {
     private String state;
     private String zip;
     private String password;
+    private boolean isCustomer;
 
     /**
-     * Default constructor of Customer object
+     * Default constructor of User object
      */
-    public Customer() {
-        this.customer_id = 000;
+    public User() {
+        this.user_id = 000;
         this.name = "John Smith";
         this.email = "john.smith@mailinator.com";
         this.phone_number = "1234567890";
@@ -37,24 +36,26 @@ public class Customer {
         this.state = "NY";
         this.zip = "12345";
         this.password = "password";
+        this.isCustomer = true;
     }
 
     /**
-     * Constructor to build a new Customer object with all parameters
-     * @param name name of Customer
-     * @param email email of Customer
-     * @param phone_number phone number of Customer
-     * @param rewards_balance rewards balance of Customer
-     * @param street_one street name of Customer
-     * @param street_two additional street name of Customer
-     * @param city city of Customer
-     * @param state state of Customer
-     * @param zip zip code of Customer
-     * @param password password of Customer
+     * Constructor to build a new User object with all parameters
+     * @param name name of User
+     * @param email email of User
+     * @param phone_number phone number of User
+     * @param rewards_balance rewards balance of User
+     * @param street_one street name of User
+     * @param street_two additional street name of User
+     * @param city city of User
+     * @param state state of User
+     * @param zip zip code of User
+     * @param password password of User
+     * @param isCustomer whether or not the User is a Customer
      */
-    public Customer(int customer_id, String name, String email, String phone_number, short rewards_balance, String street_one,
-                    String street_two, String city, String state, String zip, String password) {
-        this.customer_id = customer_id;
+    public User(int user_id, String name, String email, String phone_number, short rewards_balance, String street_one,
+                    String street_two, String city, String state, String zip, String password, boolean isCustomer) {
+        this.user_id = user_id;
         this.name = name;
         this.email = email;
         this.phone_number = phone_number;
@@ -65,14 +66,15 @@ public class Customer {
         this.state = state;
         this.zip = zip;
         this.password = password;
+        this.isCustomer = isCustomer;
     }
 
-    public int getCustomer_id() {
-        return customer_id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getName() {
@@ -153,5 +155,13 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isCustomer() {
+        return isCustomer;
+    }
+
+    public void setIsCustomer(boolean isCustomer) {
+        this.isCustomer = isCustomer;
     }
 }
