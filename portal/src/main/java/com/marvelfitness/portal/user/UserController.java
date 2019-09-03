@@ -1,5 +1,6 @@
 package com.marvelfitness.portal.user;
 
+import com.marvelfitness.portal.rewards.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -101,6 +102,7 @@ public class UserController {
      * Endpoint for updating a Customer's reward balance
      * @param user_id id of Customer to update
      * @param new_balance new reward balance
+     * @return appropriate ResponseEntity (404 if invalid user_id, 200 if valid)
      */
     @RequestMapping(method=RequestMethod.POST, value="/customers/update_balance/{user_id}")
     public ResponseEntity updateBalance(@PathVariable int user_id,
@@ -108,4 +110,14 @@ public class UserController {
         return userService.updateRewardsBalance(user_id, new_balance);
     }
 
+    /**
+     * Endpoint for emailing Customers when they redeem rewards points
+     * @param reward_id id of reward redeemed
+     * @param user_id id of Customer to email
+     * @return appropriate ResponseEntity (404 if invalid user_id, 200 if valid)
+     */
+    @RequestMapping(method= RequestMethod.POST, value="/rewards/{reward_id}/email/{user_id}")
+    public ResponseEntity sendEmail(@PathVariable int reward_id, @PathVariable int user_id) {
+        return userService.sendEmail(user_id, reward_id);
+    }
 }
