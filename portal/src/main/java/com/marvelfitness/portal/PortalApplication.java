@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan({"com.marvelfitness"})
-@EnableJpaRepositories(basePackages = {"com.marvelfitness.portal.customer", "com.marvelfitness.portal.employee", "com.marvelfitness.portal.rewards", "com.marvelfitness.portal.visits"})
+@EnableJpaRepositories(basePackages = {"com.marvelfitness.portal.authentication", "com.marvelfitness.portal.config",
+		"com.marvelfitness.portal.customer", "com.marvelfitness.portal.employee", "com.marvelfitness.portal.rewards",
+		"com.marvelfitness.portal.visits"})
 @EntityScan(basePackages="com.marvelfitness.portal")
 public class PortalApplication {
 
