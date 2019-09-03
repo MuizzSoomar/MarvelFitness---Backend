@@ -3,10 +3,9 @@ package com.marvelfitness.portal.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 public class UserService {
@@ -25,43 +24,83 @@ public class UserService {
     }
 
     /**
-     * Gets an individual User from the database with a given id
-     * @param user_id id of User
-     * @return User with given id
+     * Gets a list of all Customers from the database
+     * @return list of all Customers
      */
-    public User getUserById(int user_id) {
-        return userRepository.findById(user_id).orElse(null);
-
+    public List<User> getAllCustomers() {
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        users.removeIf(((Predicate<User>) User::isCustomer).negate());
+        return users;
     }
 
     /**
-     * Search functionality for Users
-     * Will find all Users that match a given name or email, or a list of all Users if none are found
-     * @param name User name
-     * @param email User email
-     * @return list of Users that match parameters
+     * Gets a list of all Employees from the database
+     * @return list of all Employees
      */
-    public List<User> searchForUser(String name, String email) {
+    public List<User> getAllEmployees() {
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        users.removeIf(User::isCustomer);
+        return users;
+    }
+
+    /**
+     * Gets an individual Customer from the database with a given id
+     * @param user_id id of User
+     * @return Customer with given id, null if not a Customer
+     */
+    public User getCustomerById(int user_id) {
+        User user = userRepository.findById(user_id).orElse(null);
+        if (user != null && user.isCustomer()) {
+            return user;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets an individual Employee from the database with a given id
+     * @param user_id id of User
+     * @return Employee with given id, null if not a Employee
+     */
+    public User getEmployeeById(int user_id) {
+        User user = userRepository.findById(user_id).orElse(null);
+        if (user != null && !user.isCustomer()) {
+            return user;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Search functionality for Customers
+     * Will find all Customers that match a given name or email, or a list of all Customers if none are found
+     * @param name Customer name
+     * @param email Customer email
+     * @return list of Customers that match parameters
+     */
+    public List<User> searchForCustomer(String name, String email) {
 
         //create an empty list to hold all users found by the search query
-        List<User> users = new ArrayList<>();
-
+        List<User> customers = new ArrayList<>();
         //add users by name if given as a parameter
         if (name != "") {
-            userRepository.findUsersByName(name).forEach(users::add);
+            userRepository.findUsersByName(name).forEach(customers::add);
         }
-
         //add users by email if given as a parameter
         if (email != "") {
-            userRepository.findUsersByEmail(email).forEach(users::add);
+            userRepository.findUsersByEmail(email).forEach(customers::add);
+        }
+        //remove all users who are not customers
+        customers.removeIf(((Predicate<User>) User::isCustomer).negate());
+        //create a list of all customers if none are found with the given parameters
+        if (customers.size() == 0) {
+            userRepository.findAll().forEach(customers::add);
+            customers.removeIf(((Predicate<User>) User::isCustomer).negate());
         }
 
-        //create a list of all users if none are found with the given parameters
-        if (users.size() == 0) {
-            userRepository.findAll().forEach(users::add);
-        }
-
-        return users;
+        return customers;
     }
 
     /**
@@ -73,19 +112,21 @@ public class UserService {
     }
 
     /**
-     * Updates the given User's entry in the database
-     * @param user User to update
-     * @param user_id id of User to update
-     */
-    public void updateUser(User user, int user_id) {
-        userRepository.save(user);
-    }
-
-    /**
      * Deletes the given User from the database
      * @param user_id id of User to delete
      */
     public void deleteUser(int user_id) {
         userRepository.deleteById(user_id);
+    }
+
+    /**
+     * Updates the rewards balance of the Customer
+     * @param user_id id of Customer to update
+     * @param new_balance new balance for Customer
+     */
+    public void updateRewardsBalance(int user_id, short new_balance) {
+        User customer = getCustomerById(user_id);
+        customer.setRewards_balance(new_balance);
+        userRepository.save(customer);
     }
 }

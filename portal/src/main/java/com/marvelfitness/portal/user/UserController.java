@@ -21,24 +21,51 @@ public class UserController {
     }
 
     /**
-     * Endpoint for getting a User by user_id
-     * @return User data with given user_id
+     * Endpoint for getting a list of all Customers
+     * @return list of all Customers in database
      */
-    @RequestMapping("/users/{user_id}")
-    public User getUserById(@PathVariable int user_id) {
-        return userService.getUserById(user_id);
+    @RequestMapping("/customers")
+    public List<User> getAllCustomers() {
+        return userService.getAllCustomers();
     }
 
     /**
-     * Endpoint for User search functionality
-     * @param name User name
-     * @param email User email
+     * Endpoint for getting a list of all Employees
+     * @return list of all Employees in database
+     */
+    @RequestMapping("/employees")
+    public List<User> getAllEmployees() {
+        return userService.getAllEmployees();
+    }
+
+    /**
+     * Endpoint for getting a Customer by user_id
+     * @return Customer data with given user_id
+     */
+    @RequestMapping("/customers/{user_id}")
+    public User getCustomerById(@PathVariable int user_id) {
+        return userService.getCustomerById(user_id);
+    }
+
+    /**
+     * Endpoint for getting a Employee by user_id
+     * @return Employee data with given user_id
+     */
+    @RequestMapping("/employees/{user_id}")
+    public User getEmployeeById(@PathVariable int user_id) {
+        return userService.getEmployeeById(user_id);
+    }
+
+    /**
+     * Endpoint for Customer search functionality
+     * @param name Customer name
+     * @param email Customer email
      * @return User data with given name, email, or list of all Users if no matches found
      */
-    @RequestMapping(value = "/users/search")
-    public List<User> searchForUser(@RequestParam(value="name", required=false, defaultValue = "") String name,
-                                            @RequestParam(value="email", required=false, defaultValue = "") String email) {
-        return userService.searchForUser(name, email);
+    @RequestMapping(value = "/customers/search")
+    public List<User> searchForCustomer(@RequestParam(value="name", required=false, defaultValue = "") String name,
+                                        @RequestParam(value="email", required=false, defaultValue = "") String email) {
+        return userService.searchForCustomer(name, email);
     }
 
     /**
@@ -51,22 +78,23 @@ public class UserController {
     }
 
     /**
-     * Endpoint for updating a given User's information in the database
-     * @param user new User object with updated information
-     * @param user_id id of User to update
-     */
-    @RequestMapping(method=RequestMethod.PUT, value="/users/{user_id}")
-    public void updateUser(@RequestBody User user, @PathVariable int user_id) {
-        userService.updateUser(user, user_id);
-    }
-
-    /**
      * Endpoint for deleting a User with the given id from the database
      * @param user_id id of User to delete
      */
     @RequestMapping(method=RequestMethod.DELETE, value="/users/{user_id}")
     public void deleteUser(@PathVariable int user_id) {
         userService.deleteUser(user_id);
+    }
+
+    /**
+     * Endpoint for updating a Customer's reward balance
+     * @param user_id id of Customer to update
+     * @param new_balance new reward balance
+     */
+    @RequestMapping(method=RequestMethod.POST, value="/customers/update_balance/{user_id}")
+    public void updateBalance(@PathVariable int user_id,
+                              @RequestParam(value="new_balance", defaultValue="5") short new_balance) {
+        userService.updateRewardsBalance(user_id, new_balance);
     }
 
 }
