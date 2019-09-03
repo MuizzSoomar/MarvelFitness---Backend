@@ -25,11 +25,6 @@ public class RewardController {
         rewardService.addReward(reward);
     }
 
-    @RequestMapping(method=RequestMethod.PUT, value="/rewards/{reward_id}")
-    public void updateReward(@RequestBody Reward reward, @PathVariable int reward_id) {
-        rewardService.updateReward(reward, reward_id);
-    }
-
     @RequestMapping(method=RequestMethod.DELETE, value="/rewards/{reward_id}")
     public void deleteReward(@PathVariable int reward_id) {
         rewardService.deleteReward(reward_id);

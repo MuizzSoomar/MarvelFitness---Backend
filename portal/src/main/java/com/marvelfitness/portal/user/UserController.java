@@ -1,6 +1,8 @@
 package com.marvelfitness.portal.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,8 +46,12 @@ public class UserController {
      * @return Customer data with given user_id
      */
     @RequestMapping(method=RequestMethod.GET, value="/customers/{user_id}")
-    public User getCustomerById(@PathVariable int user_id) {
-        return userService.getCustomerById(user_id);
+    public ResponseEntity<User> getCustomerById(@PathVariable int user_id) {
+        User user = userService.getCustomerById(user_id);
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
     }
 
     /**
@@ -53,8 +59,12 @@ public class UserController {
      * @return Employee data with given user_id
      */
     @RequestMapping(method=RequestMethod.GET, value="/employees/{user_id}")
-    public User getEmployeeById(@PathVariable int user_id) {
-        return userService.getEmployeeById(user_id);
+    public ResponseEntity<User> getEmployeeById(@PathVariable int user_id) {
+        User user = userService.getEmployeeById(user_id);
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
     }
 
     /**
@@ -93,9 +103,9 @@ public class UserController {
      * @param new_balance new reward balance
      */
     @RequestMapping(method=RequestMethod.POST, value="/customers/update_balance/{user_id}")
-    public void updateBalance(@PathVariable int user_id,
+    public ResponseEntity updateBalance(@PathVariable int user_id,
                               @RequestParam(value="new_balance", defaultValue="5") short new_balance) {
-        userService.updateRewardsBalance(user_id, new_balance);
+        return userService.updateRewardsBalance(user_id, new_balance);
     }
 
 }

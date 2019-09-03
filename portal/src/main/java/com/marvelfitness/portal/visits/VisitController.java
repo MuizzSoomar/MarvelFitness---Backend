@@ -25,11 +25,6 @@ public class VisitController {
         visitService.addVisit(visit);
     }
 
-    @RequestMapping(method=RequestMethod.PUT, value="/visits/{visit_id}")
-    public void updateVisit(@RequestBody Visit visit, @PathVariable int visit_id) {
-        visitService.updateVisit(visit, visit_id);
-    }
-
     @RequestMapping(method=RequestMethod.DELETE, value="/visits/{visit_id}")
     public void deleteVisit(@PathVariable int visit_id) {
         visitService.deleteVisit(visit_id);

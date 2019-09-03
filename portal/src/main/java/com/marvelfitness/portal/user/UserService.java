@@ -1,6 +1,8 @@
 package com.marvelfitness.portal.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -124,9 +126,13 @@ public class UserService {
      * @param user_id id of Customer to update
      * @param new_balance new balance for Customer
      */
-    public void updateRewardsBalance(int user_id, short new_balance) {
+    public ResponseEntity updateRewardsBalance(int user_id, short new_balance) {
         User customer = getCustomerById(user_id);
-        customer.setRewards_balance(new_balance);
-        userRepository.save(customer);
+        if (customer != null) {
+            customer.setRewards_balance(new_balance);
+            userRepository.save(customer);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }
