@@ -16,6 +16,11 @@ public class VisitController {
         return visitService.getAllVisits();
     }
 
+    @RequestMapping(method=RequestMethod.GET, value="/visits/customer/{user_id}")
+    public List<Visit> getAllVisitsByCustomer(@PathVariable int user_id) {
+        return visitService.getAllVisitsByCustomer(user_id);
+    }
+
     @RequestMapping(method=RequestMethod.GET, value="/visits/{visit_id}")
     public Visit getVisit(@PathVariable int visit_id) {
         return visitService.getVisit(visit_id);

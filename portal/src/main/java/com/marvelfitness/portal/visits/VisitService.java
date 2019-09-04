@@ -20,9 +20,14 @@ public class VisitService {
         return visits;
     }
 
+    public List<Visit> getAllVisitsByCustomer(int user_id) {
+        List<Visit> visits = getAllVisits();
+        visits.removeIf(n -> (n.getCustomer_id() != user_id));
+        return visits;
+    }
+
     public Visit getVisit(int visit_id) {
         return visitRepository.findById(visit_id).orElse(null);
-
     }
 
     public void addVisit(Visit visit) {
