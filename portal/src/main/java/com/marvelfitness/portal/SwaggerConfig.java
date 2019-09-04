@@ -31,7 +31,11 @@ public class SwaggerConfig {
                 "Backend API endpoints for MarvelFitness web application",
                 "",
                 "Terms of service",
-                new Contact("Quintin Roper", "www.example.com", "quintin.roper@credera.com"),
-                "License of API", "API license URL", Collections.emptyList());
+                new Contact("Marvel Fitness",
+                        "https://github.com/MuizzSoomar/MarvelFitness---Backend",
+                        "marvelfitness09@gmail.com"),
+                "License of API",
+                "API license URL",
+                Collections.emptyList());
     }
 }
