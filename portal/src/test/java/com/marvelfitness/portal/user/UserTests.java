@@ -51,7 +51,6 @@ public class UserTests {
                 .andExpect(jsonPath("$.name", is("Tony Stark")))
                 .andExpect(jsonPath("$.email", is("iron.man@mailinator.com")))
                 .andExpect(jsonPath("$.phone_number", is("1234567890")))
-                .andExpect(jsonPath("$.rewards_balance", is(100)))
                 .andExpect(jsonPath("$.street_one", is("1 Stark Tower")))
                 .andExpect(jsonPath("$.street_two", isEmptyOrNullString()))
                 .andExpect(jsonPath("$.city", is("Malibu")))
