@@ -1,6 +1,9 @@
 package com.marvelfitness.portal.user;
 
+import com.marvelfitness.portal.rewards.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +19,7 @@ public class UserController {
      * Endpoint for getting a list of all Users
      * @return list of all Users in database
      */
-    @RequestMapping("/users")
+    @RequestMapping(method=RequestMethod.GET, value="/users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -25,7 +28,7 @@ public class UserController {
      * Endpoint for getting a list of all Customers
      * @return list of all Customers in database
      */
-    @RequestMapping("/customers")
+    @RequestMapping(method=RequestMethod.GET, value="/customers")
     public List<User> getAllCustomers() {
         return userService.getAllCustomers();
     }
@@ -34,7 +37,7 @@ public class UserController {
      * Endpoint for getting a list of all Employees
      * @return list of all Employees in database
      */
-    @RequestMapping("/employees")
+    @RequestMapping(method=RequestMethod.GET, value="/employees")
     public List<User> getAllEmployees() {
         return userService.getAllEmployees();
     }
@@ -43,18 +46,26 @@ public class UserController {
      * Endpoint for getting a Customer by user_id
      * @return Customer data with given user_id
      */
-    @RequestMapping("/customers/{user_id}")
-    public User getCustomerById(@PathVariable int user_id) {
-        return userService.getCustomerById(user_id);
+    @RequestMapping(method=RequestMethod.GET, value="/customers/{user_id}")
+    public ResponseEntity<User> getCustomerById(@PathVariable int user_id) {
+        User user = userService.getCustomerById(user_id);
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
     }
 
     /**
      * Endpoint for getting a Employee by user_id
      * @return Employee data with given user_id
      */
-    @RequestMapping("/employees/{user_id}")
-    public User getEmployeeById(@PathVariable int user_id) {
-        return userService.getEmployeeById(user_id);
+    @RequestMapping(method=RequestMethod.GET, value="/employees/{user_id}")
+    public ResponseEntity<User> getEmployeeById(@PathVariable int user_id) {
+        User user = userService.getEmployeeById(user_id);
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
     }
 
     /**
@@ -63,7 +74,7 @@ public class UserController {
      * @param email Customer email
      * @return User data with given name, email, or list of all Users if no matches found
      */
-    @RequestMapping(value = "/customers/search")
+    @RequestMapping(method=RequestMethod.GET, value="/customers/search")
     public List<User> searchForCustomer(@RequestParam(value="name", required=false, defaultValue = "") String name,
                                         @RequestParam(value="email", required=false, defaultValue = "") String email) {
         return userService.searchForCustomer(name, email);
@@ -73,7 +84,7 @@ public class UserController {
      * Endpoint for adding a new User to the database
      * @param user new User info to add
      */
-    @RequestMapping(method= RequestMethod.POST, value="/users")
+    @RequestMapping(method=RequestMethod.POST, value="/users")
     public void addUser(@RequestBody User user) {
         userService.addUser(user);
     }
@@ -91,11 +102,22 @@ public class UserController {
      * Endpoint for updating a Customer's reward balance
      * @param user_id id of Customer to update
      * @param new_balance new reward balance
+     * @return appropriate ResponseEntity (404 if invalid user_id, 200 if valid)
      */
     @RequestMapping(method=RequestMethod.POST, value="/customers/update_balance/{user_id}")
-    public void updateBalance(@PathVariable int user_id,
+    public ResponseEntity updateBalance(@PathVariable int user_id,
                               @RequestParam(value="new_balance", defaultValue="5") short new_balance) {
-        userService.updateRewardsBalance(user_id, new_balance);
+        return userService.updateRewardsBalance(user_id, new_balance);
     }
 
+    /**
+     * Endpoint for emailing Customers when they redeem rewards points
+     * @param reward_id id of reward redeemed
+     * @param user_id id of Customer to email
+     * @return appropriate ResponseEntity (404 if invalid user_id, 200 if valid)
+     */
+    @RequestMapping(method= RequestMethod.POST, value="/rewards/{reward_id}/email/{user_id}")
+    public ResponseEntity sendEmail(@PathVariable int reward_id, @PathVariable int user_id) {
+        return userService.sendEmail(user_id, reward_id);
+    }
 }

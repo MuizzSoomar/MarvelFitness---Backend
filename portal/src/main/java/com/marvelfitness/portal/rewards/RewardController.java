@@ -10,12 +10,12 @@ public class RewardController {
     @Autowired
     private RewardService rewardService;
 
-    @RequestMapping("/rewards")
+    @RequestMapping(method=RequestMethod.GET, value="/rewards")
     public List<Reward> getAllRewards() {
         return rewardService.getAllRewards();
     }
 
-    @RequestMapping("/rewards/{reward_id}")
+    @RequestMapping(method=RequestMethod.GET, value="/rewards/{reward_id}")
     public Reward getReward(@PathVariable int reward_id) {
         return rewardService.getReward(reward_id);
     }
@@ -23,11 +23,6 @@ public class RewardController {
     @RequestMapping(method= RequestMethod.POST, value="/rewards")
     public void addReward(@RequestBody Reward reward) {
         rewardService.addReward(reward);
-    }
-
-    @RequestMapping(method=RequestMethod.PUT, value="/rewards/{reward_id}")
-    public void updateReward(@RequestBody Reward reward, @PathVariable int reward_id) {
-        rewardService.updateReward(reward, reward_id);
     }
 
     @RequestMapping(method=RequestMethod.DELETE, value="/rewards/{reward_id}")

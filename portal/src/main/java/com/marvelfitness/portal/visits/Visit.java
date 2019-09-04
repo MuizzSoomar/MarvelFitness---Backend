@@ -1,16 +1,14 @@
 package com.marvelfitness.portal.visits;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 public class Visit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "visit_id_sequence", sequenceName = "visit_id_sequence", initialValue = 1, allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="visit_id_sequence")
     private int visit_id;
     private int customer_id;
     private Timestamp timestamp;
