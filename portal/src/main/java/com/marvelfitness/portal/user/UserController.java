@@ -43,8 +43,23 @@ public class UserController {
     }
 
     /**
+     * Endpoint for getting a User by user_id
+     * @param user_id id of User to find
+     * @return Appropriate ResponseEntity with User data associated with given user_id
+     */
+    @RequestMapping(method=RequestMethod.GET, value="/users/{user_id}")
+    public ResponseEntity<User> getUserById(@PathVariable int user_id) {
+        User user = userService.getUserById(user_id);
+        if (user != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
+    }
+
+    /**
      * Endpoint for getting a Customer by user_id
-     * @return Customer data with given user_id
+     * @param user_id id of User to find
+     * @return Appropriate ResponseEntity with Customer data associated with given user_id
      */
     @RequestMapping(method=RequestMethod.GET, value="/customers/{user_id}")
     public ResponseEntity<User> getCustomerById(@PathVariable int user_id) {
@@ -57,7 +72,8 @@ public class UserController {
 
     /**
      * Endpoint for getting a Employee by user_id
-     * @return Employee data with given user_id
+     * @param user_id id of User to find
+     * @return Appropriate ResponseEntity with Employee data associated with given user_id
      */
     @RequestMapping(method=RequestMethod.GET, value="/employees/{user_id}")
     public ResponseEntity<User> getEmployeeById(@PathVariable int user_id) {
@@ -82,7 +98,7 @@ public class UserController {
 
     /**
      * Endpoint for adding a new User to the database
-     * @param user new User info to add
+     * @param user new User to add
      */
     @RequestMapping(method=RequestMethod.POST, value="/users")
     public void addUser(@RequestBody User user) {
