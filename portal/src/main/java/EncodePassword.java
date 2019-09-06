@@ -3,7 +3,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class EncodePassword {
 
     public static void main(String[] args) {
-        String password = "iHateTonyStark";
+        String password = "Joan<3Lee";
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
 
