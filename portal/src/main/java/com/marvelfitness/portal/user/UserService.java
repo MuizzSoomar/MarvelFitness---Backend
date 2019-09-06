@@ -96,7 +96,7 @@ public class UserService {
      * Search functionality for Customers
      * Will find all Customers that match a given name or username, or a list of all Customers if none are found
      * @param name Customer name
-     * @param username Customer username
+     * @param username Customer email/username
      * @return list of Customers that match parameters
      */
     public List<User> searchForCustomer(String name, String username) {

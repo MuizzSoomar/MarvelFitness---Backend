@@ -4,11 +4,12 @@ import com.marvelfitness.portal.rewards.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = { "http://localhost:3000/**"})
+@CrossOrigin(origins = { "http://localhost:3000"})
 @RestController
 public class UserController {
 
@@ -87,10 +88,11 @@ public class UserController {
     /**
      * Endpoint for Customer search functionality
      * @param name Customer name
-     * @param username Customer username
-     * @return User data with given name, username, or list of all Users if no matches found
+     * @param username Customer email/username
+     * @return User data with given name, email, or list of all Users if no matches found
      */
     @RequestMapping(method=RequestMethod.GET, value="/customers/search")
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'CUSTOMER')")
     public List<User> searchForCustomer(@RequestParam(value="name", required=false, defaultValue = "") String name,
                                         @RequestParam(value="username", required=false, defaultValue = "") String username) {
         return userService.searchForCustomer(name, username);

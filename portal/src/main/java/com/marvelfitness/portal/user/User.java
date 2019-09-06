@@ -1,6 +1,10 @@
 package com.marvelfitness.portal.user;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "user_table", schema = "public")
@@ -20,6 +24,13 @@ public class User {
     private String zip;
     private String password;
     private boolean isCustomer;
+//    private String role;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     /**
      * Default constructor of User object
@@ -170,4 +181,9 @@ public class User {
     public void setIsCustomer(boolean isCustomer) {
         this.isCustomer = isCustomer;
     }
+
+    public Set<Role> getRoles() { return roles; }
+
+    public void setRoles(Set<Role> roles)  { this.roles = roles; }
+
 }
