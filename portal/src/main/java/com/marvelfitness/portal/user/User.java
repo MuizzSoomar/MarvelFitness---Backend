@@ -1,6 +1,10 @@
 package com.marvelfitness.portal.user;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "user_table", schema = "public")
@@ -10,7 +14,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int user_id;
     private String name;
-    private String email;
+    private String username;
     private String phone_number;
     private short rewards_balance;
     private String street_one;
@@ -20,6 +24,13 @@ public class User {
     private String zip;
     private String password;
     private boolean isCustomer;
+//    private String role;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     /**
      * Default constructor of User object
@@ -27,7 +38,7 @@ public class User {
     public User() {
         this.user_id = 000;
         this.name = "John Smith";
-        this.email = "john.smith@mailinator.com";
+        this.username = "john.smith@mailinator.com";
         this.phone_number = "1234567890";
         this.rewards_balance = 0;
         this.street_one = "123 Main St";
@@ -42,7 +53,7 @@ public class User {
     /**
      * Constructor to build a new User object with all parameters
      * @param name name of User
-     * @param email email of User
+     * @param username email of User
      * @param phone_number phone number of User
      * @param rewards_balance rewards balance of User
      * @param street_one street name of User
@@ -53,11 +64,11 @@ public class User {
      * @param password password of User
      * @param isCustomer whether or not the User is a Customer
      */
-    public User(int user_id, String name, String email, String phone_number, short rewards_balance, String street_one,
+    public User(int user_id, String name, String username, String phone_number, short rewards_balance, String street_one,
                     String street_two, String city, String state, String zip, String password, boolean isCustomer) {
         this.user_id = user_id;
         this.name = name;
-        this.email = email;
+        this.username = username;
         this.phone_number = phone_number;
         this.rewards_balance = rewards_balance;
         this.street_one = street_one;
@@ -85,12 +96,12 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhone_number() {
@@ -164,4 +175,9 @@ public class User {
     public void setIsCustomer(boolean isCustomer) {
         this.isCustomer = isCustomer;
     }
+
+    public Set<Role> getRoles() { return roles; }
+
+    public void setRoles(Set<Role> roles)  { this.roles = roles; }
+
 }

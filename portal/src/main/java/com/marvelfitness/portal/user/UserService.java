@@ -89,10 +89,10 @@ public class UserService {
      * Search functionality for Customers
      * Will find all Customers that match a given name or email, or a list of all Customers if none are found
      * @param name Customer name
-     * @param email Customer email
+     * @param username Customer email/username
      * @return list of Customers that match parameters
      */
-    public List<User> searchForCustomer(String name, String email) {
+    public List<User> searchForCustomer(String name, String username) {
 
         //create an empty list to hold all users found by the search query
         List<User> customers = new ArrayList<>();
@@ -101,8 +101,8 @@ public class UserService {
             userRepository.findUsersByName(name).forEach(customers::add);
         }
         //add users by email if given as a parameter
-        if (email != "") {
-            userRepository.findUsersByEmail(email).forEach(customers::add);
+        if (username != "") {
+            userRepository.findUsersByUsername(username).forEach(customers::add);
         }
         //remove all users who are not customers
         customers.removeIf(((Predicate<User>) User::isCustomer).negate());
@@ -158,7 +158,7 @@ public class UserService {
         if (user != null) {
             Reward reward = rewardService.getReward(reward_id);
             SimpleMailMessage msg = new SimpleMailMessage();
-            msg.setTo(user.getEmail());
+            msg.setTo(user.getUsername());
             msg.setSubject("You have earned " + reward.getDescription());
             String message = "Dear " + user.getName() + ",\n\nCongratulations! You have earned " +
                     reward.getDescription() + "\n\nPlease show this email at your next visit to receive " +
