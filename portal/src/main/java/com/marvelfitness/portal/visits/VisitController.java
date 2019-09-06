@@ -1,6 +1,7 @@
 package com.marvelfitness.portal.visits;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,11 @@ public class VisitController {
     @RequestMapping(method=RequestMethod.GET, value="/visits/customer/{user_id}")
     public List<Visit> getAllVisitsByCustomer(@PathVariable int user_id) {
         return visitService.getAllVisitsByCustomer(user_id);
+    }
+
+    @RequestMapping(method=RequestMethod.POST, value="/customers/visits/{user_id}")
+    public ResponseEntity checkIn(@PathVariable int user_id) {
+        return visitService.checkIn(user_id);
     }
 
     @RequestMapping(method=RequestMethod.GET, value="/visits/{visit_id}")
