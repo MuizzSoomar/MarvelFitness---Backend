@@ -58,17 +58,25 @@ public class UserService {
     }
 
     /**
+     * Gets an individual User from the database with a given id
+     * @param user_id id of User
+     * @return User with given id, null if not found
+     */
+    public User getUserById(int user_id) {
+        return userRepository.findById(user_id).orElse(null);
+    }
+
+    /**
      * Gets an individual Customer from the database with a given id
      * @param user_id id of User
      * @return Customer with given id, null if not a Customer
      */
     public User getCustomerById(int user_id) {
-        User user = userRepository.findById(user_id).orElse(null);
+        User user = getUserById(user_id);
         if (user != null && user.isCustomer()) {
             return user;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -77,12 +85,11 @@ public class UserService {
      * @return Employee with given id, null if not a Employee
      */
     public User getEmployeeById(int user_id) {
-        User user = userRepository.findById(user_id).orElse(null);
+        User user = getUserById(user_id);
         if (user != null && !user.isCustomer()) {
             return user;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
