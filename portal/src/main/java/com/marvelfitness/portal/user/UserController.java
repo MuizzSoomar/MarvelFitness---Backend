@@ -87,13 +87,13 @@ public class UserController {
     /**
      * Endpoint for Customer search functionality
      * @param name Customer name
-     * @param email Customer email
-     * @return User data with given name, email, or list of all Users if no matches found
+     * @param username Customer username
+     * @return User data with given name, username, or list of all Users if no matches found
      */
     @RequestMapping(method=RequestMethod.GET, value="/customers/search")
     public List<User> searchForCustomer(@RequestParam(value="name", required=false, defaultValue = "") String name,
-                                        @RequestParam(value="email", required=false, defaultValue = "") String email) {
-        return userService.searchForCustomer(name, email);
+                                        @RequestParam(value="username", required=false, defaultValue = "") String username) {
+        return userService.searchForCustomer(name, username);
     }
 
     /**
@@ -132,7 +132,7 @@ public class UserController {
      * @param user_id id of Customer to email
      * @return appropriate ResponseEntity (404 if invalid user_id, 200 if valid)
      */
-    @RequestMapping(method= RequestMethod.POST, value="/rewards/{reward_id}/email/{user_id}")
+    @RequestMapping(method= RequestMethod.POST, value="/rewards/{reward_id}/username/{user_id}")
     public ResponseEntity sendEmail(@PathVariable int reward_id, @PathVariable int user_id) {
         return userService.sendEmail(user_id, reward_id);
     }
