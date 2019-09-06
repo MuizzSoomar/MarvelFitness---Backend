@@ -53,7 +53,7 @@ public class User {
     /**
      * Constructor to build a new User object with all parameters
      * @param name name of User
-     * @param username email of User
+     * @param username username of User
      * @param phone_number phone number of User
      * @param rewards_balance rewards balance of User
      * @param street_one street name of User
@@ -117,7 +117,13 @@ public class User {
     }
 
     public void setRewards_balance(short rewards_balance) {
-        this.rewards_balance = rewards_balance;
+        if (rewards_balance >= 0 && rewards_balance <= 100) {
+            this.rewards_balance = rewards_balance;
+        } else if (rewards_balance > 100) {
+            this.rewards_balance = 100;
+        } else {
+            this.rewards_balance = 0;
+        }
     }
 
     public String getStreet_one() {
