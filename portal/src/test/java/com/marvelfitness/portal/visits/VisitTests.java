@@ -55,7 +55,7 @@ public class VisitTests {
         MvcResult result = mvc.perform(get("/visits/" + visit_id).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.visit_id", is(visit_id)))
-                .andExpect(jsonPath("$.customer_id", is(7)))
+                .andExpect(jsonPath("$.customer_id", is(3)))
                 .andReturn();
     }
 }
