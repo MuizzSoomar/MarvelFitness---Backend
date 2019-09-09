@@ -21,6 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Class to test Visit functionality in Visit Service that is exposed by Visit Controller
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes=PortalApplication.class)
 @ActiveProfiles("test")
@@ -33,12 +36,19 @@ public class VisitTests {
 
     private MockMvc mvc;
 
+    /**
+     * Method to set up a MockMvc before running the tests
+     */
     @Before
     public void initTests() {
         MockitoAnnotations.initMocks(this);
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+    /**
+     * Method to test that the correct Visit is returned when a valid visit id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldGetAVisit() throws Exception {
         int visit_id = 1;
