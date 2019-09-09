@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Service
@@ -24,6 +26,14 @@ public class UserService {
 
     @Autowired
     private RewardService rewardService;
+
+
+    private Authentication authentication;
+
+
+    public Optional<User> getUserDetails(String username) {
+        return userRepository.findByUsername(username);
+    }
 
     /**
      * Gets a list of all Users from the database

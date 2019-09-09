@@ -21,16 +21,40 @@ public class UserPrinciple implements UserDetails {
 
     private String username;
 
+    private short rewards_balance;
+
+    private String street_one;
+
+    private String street_two;
+
+    private String city;
+
+    private String state;
+
+    private String zip;
+
+    private boolean is_customer;
+
+
+
     @JsonIgnore
     private String password;
 
     private List<GrantedAuthority> authorities;
 
-    public UserPrinciple(Integer user_id, String name, String username, String password,
+    public UserPrinciple(Integer user_id, String name, String username, short rewards_balance, String street_one,
+                         String street_two, String city, String state, String zip, boolean isCustomer, String password,
                          List<GrantedAuthority> authorities) {
         this.user_id = user_id;
         this.name = name;
         this.username = username;
+        this.rewards_balance = rewards_balance;
+        this.street_one = street_one;
+        this.street_two = street_two;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.is_customer = isCustomer;
         this.password = password;
         this.authorities = authorities;
     }
@@ -44,6 +68,13 @@ public class UserPrinciple implements UserDetails {
                 user.getUser_id(),
                 user.getName(),
                 user.getUsername(),
+                user.getRewards_balance(),
+                user.getStreet_one(),
+                user.getStreet_two(),
+                user.getCity(),
+                user.getState(),
+                user.getZip(),
+                user.isCustomer(),
                 user.getPassword(),
                 authorities
         );
@@ -55,6 +86,32 @@ public class UserPrinciple implements UserDetails {
 
     public String getName() {
         return name;
+    }
+
+    public short getRewards_balance() { return rewards_balance; }
+
+    public String getStreet_one() {
+        return street_one;
+    }
+
+    public String getStreet_two() {
+        return street_two;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public boolean isIs_customer() {
+        return is_customer;
     }
 
     @Override
