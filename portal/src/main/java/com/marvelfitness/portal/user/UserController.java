@@ -144,7 +144,7 @@ public class UserController {
      * @param user_id id of Customer to email
      * @return appropriate ResponseEntity (404 if invalid user_id, 200 if valid)
      */
-    @RequestMapping(method= RequestMethod.POST, value="/rewards/{reward_id}/email/{user_id}")
+    @RequestMapping(method= RequestMethod.POST, value="/rewards/{reward_id}/username/{user_id}")
     public ResponseEntity sendEmail(@PathVariable int reward_id, @PathVariable int user_id) {
         return userService.sendEmail(user_id, reward_id);
     }

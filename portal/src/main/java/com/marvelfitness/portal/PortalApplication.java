@@ -5,11 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan({"com.marvelfitness"})
 @EnableJpaRepositories(basePackages = {"com.marvelfitness.portal.rewards", "com.marvelfitness.portal.visits", "com.marvelfitness.portal.user"})
 @EntityScan(basePackages="com.marvelfitness.portal")
+@EnableScheduling
 public class PortalApplication {
 
 	public static void main(String[] args) {

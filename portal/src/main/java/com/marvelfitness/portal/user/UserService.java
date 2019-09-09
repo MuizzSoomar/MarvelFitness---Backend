@@ -104,7 +104,7 @@ public class UserService {
 
     /**
      * Search functionality for Customers
-     * Will find all Customers that match a given name or email, or a list of all Customers if none are found
+     * Will find all Customers that match a given name or username, or a list of all Customers if none are found
      * @param name Customer name
      * @param username Customer email/username
      * @return list of Customers that match parameters
@@ -117,7 +117,7 @@ public class UserService {
         if (name != "") {
             userRepository.findUsersByName(name).forEach(customers::add);
         }
-        //add users by email if given as a parameter
+        //add users by username if given as a parameter
         if (username != "") {
             userRepository.findUsersByUsername(username).forEach(customers::add);
         }
@@ -166,7 +166,7 @@ public class UserService {
 
     /**
      * Emails the Customer to confirm reward redemption
-     * @param user_id id of Customer to email
+     * @param user_id id of Customer to username
      * @param reward_id id of Reward redeemed
      * @return appropriate ResponseEntity (404 if invalid user_id, 200 if valid)
      */
@@ -178,7 +178,7 @@ public class UserService {
             msg.setTo(user.getUsername());
             msg.setSubject("You have earned " + reward.getDescription());
             String message = "Dear " + user.getName() + ",\n\nCongratulations! You have earned " +
-                    reward.getDescription() + "\n\nPlease show this email at your next visit to receive " +
+                    reward.getDescription() + "\n\nPlease show this username at your next visit to receive " +
                     "your reward!\n\nThank you,\nMarvel Fitness Management";
             msg.setText(message);
 
