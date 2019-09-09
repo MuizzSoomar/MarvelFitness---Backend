@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -21,6 +20,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Class to test Reward functionality in Reward Service that is exposed by Reward Controller
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes=PortalApplication.class)
 @ActiveProfiles("test")
@@ -33,12 +35,19 @@ public class RewardTests {
 
     private MockMvc mvc;
 
+    /**
+     * Method to set up a MockMvc before running the tests
+     */
     @Before
     public void initTests() {
         MockitoAnnotations.initMocks(this);
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+    /**
+     * Method to test that the correct Reward is returned when a valid reward id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldGetAReward() throws Exception {
         int reward_id = 1;

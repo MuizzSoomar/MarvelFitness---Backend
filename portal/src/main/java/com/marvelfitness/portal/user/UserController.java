@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST Controller class for User functionality. Exposes endpoints used to access and/or modify User data
+ */
 @CrossOrigin(origins = { "http://localhost:3000"})
 @RestController
 public class UserController {

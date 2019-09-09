@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+
+/**
+ * User Service class to perform data access/ modification functionality exposed by the User Controller
+ */
 @Service
 public class UserService {
 
@@ -104,7 +108,8 @@ public class UserService {
 
     /**
      * Search functionality for Customers
-     * Will find all Customers that match a given name or username, or a list of all Customers if none are found
+     * Will return all Customers that match a given name or username
+     * Will return a list of all Customers if no matches are found
      * @param name Customer name
      * @param username Customer email/username
      * @return list of Customers that match parameters
