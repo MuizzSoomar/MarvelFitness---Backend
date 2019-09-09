@@ -33,6 +33,8 @@ public class UserPrinciple implements UserDetails {
 
     private String zip;
 
+    private String phone;
+
     private boolean is_customer;
 
 
@@ -43,7 +45,7 @@ public class UserPrinciple implements UserDetails {
     private List<GrantedAuthority> authorities;
 
     public UserPrinciple(Integer user_id, String name, String username, short rewards_balance, String street_one,
-                         String street_two, String city, String state, String zip, boolean isCustomer, String password,
+                         String street_two, String city, String state, String zip, String phone, boolean isCustomer, String password,
                          List<GrantedAuthority> authorities) {
         this.user_id = user_id;
         this.name = name;
@@ -54,6 +56,7 @@ public class UserPrinciple implements UserDetails {
         this.city = city;
         this.state = state;
         this.zip = zip;
+        this.phone = phone;
         this.is_customer = isCustomer;
         this.password = password;
         this.authorities = authorities;
@@ -74,6 +77,7 @@ public class UserPrinciple implements UserDetails {
                 user.getCity(),
                 user.getState(),
                 user.getZip(),
+                user.getPhone_number(),
                 user.isCustomer(),
                 user.getPassword(),
                 authorities
@@ -109,6 +113,8 @@ public class UserPrinciple implements UserDetails {
     public String getZip() {
         return zip;
     }
+
+    public String getPhone() { return phone; }
 
     public boolean isIs_customer() {
         return is_customer;
