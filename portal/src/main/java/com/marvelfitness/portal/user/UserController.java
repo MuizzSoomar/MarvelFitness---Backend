@@ -1,6 +1,5 @@
 package com.marvelfitness.portal.user;
 
-import com.marvelfitness.portal.rewards.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST Controller class for User functionality. Exposes endpoints used to access and/or modify User data
+ */
 @CrossOrigin(origins = { "http://localhost:3000"})
 @RestController
 public class UserController {

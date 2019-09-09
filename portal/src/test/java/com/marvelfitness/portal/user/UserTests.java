@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,6 +23,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Class to test User functionality in User Service that is exposed by User Controller
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes=PortalApplication.class)
 @ActiveProfiles("test")
@@ -36,12 +38,19 @@ public class UserTests {
 
     private MockMvc mvc;
 
+    /**
+     * Method to set up a MockMvc before running the tests
+     */
     @Before
     public void initTests() {
         MockitoAnnotations.initMocks(this);
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+    /**
+     * Method to test that the correct Customer is returned when a valid customer id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldGetAValidCustomer() throws Exception {
         int user_id = 1;
@@ -59,12 +68,20 @@ public class UserTests {
                 .andExpect(jsonPath("$.customer", is(true)));
     }
 
+    /**
+     * Method to test that a NOT_FOUND HTTP Status occurs when an invalid customer id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldNotGetAnInvalidCustomer() throws Exception {
         int user_id = 4;
         mvc.perform(get("/customers/" + user_id)).andExpect(status().isNotFound());
     }
 
+    /**
+     * Method to test that the correct Employee is returned when a valid employee id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldGetAValidEmployee() throws Exception {
         int user_id = 4;
@@ -83,28 +100,40 @@ public class UserTests {
                 .andExpect(jsonPath("$.customer", is(false)));
     }
 
+    /**
+     * Method to test that a NOT_FOUND HTTP Status occurs when an invalid employee id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldNotGetAnInvalidEmployee() throws Exception {
         int user_id = 1;
         mvc.perform(get("/employees/" + user_id)).andExpect(status().isNotFound());
     }
 
+    /**
+     * Method to test that a Customer's rewards balance updates correctly when a valid customer id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldUpdateCustomerBalance() throws Exception {
         int user_id = 1;
         MvcResult result = mvc.perform(get("/customers/" + user_id)).andReturn();
         JSONObject json = new JSONObject(result.getResponse().getContentAsString());
         int balance = json.getInt("rewards_balance");
-        mvc.perform(post("/customers/update_balance/" + user_id + "?new_balance=" + (balance - 1)))
+        mvc.perform(post("/customers/update_balance/" + user_id + "?new_balance=" + 5))
                 .andExpect(status().isOk());
         mvc.perform(get("/customers/" + user_id))
-                .andExpect(jsonPath("$.rewards_balance", is(balance - 1)));
+                .andExpect(jsonPath("$.rewards_balance", is(5)));
         mvc.perform(post("/customers/update_balance/" + user_id + "?new_balance=" + balance))
                 .andExpect(status().isOk());
         mvc.perform(get("/customers/" + user_id))
                 .andExpect(jsonPath("$.rewards_balance", is(balance)));
     }
 
+    /**
+     * Method to test that a NOT_FOUND HTTP Status occurs when an invalid customer id is provided
+     * @throws Exception when the request fails
+     */
     @Test
     public void shouldNotUpdateInvalidCustomerBalance() throws Exception {
         int user_id = 4;
