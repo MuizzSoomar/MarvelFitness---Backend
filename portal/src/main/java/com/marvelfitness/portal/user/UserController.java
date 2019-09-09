@@ -1,6 +1,5 @@
 package com.marvelfitness.portal.user;
 
-import com.marvelfitness.portal.rewards.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = { "http://localhost:3000"})
 @RestController
@@ -15,6 +15,16 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+//    @RequestMapping(value="/logout-user")
+//    public void logout() {
+//        userService.logout();
+//    }
+
+    @RequestMapping(method=RequestMethod.GET, value="/user-details/{username}")
+    public Optional<User> getUserDetails(@PathVariable String username) {
+        return userService.getUserDetails(username);
+    }
 
     /**
      * Endpoint for getting a list of all Users
